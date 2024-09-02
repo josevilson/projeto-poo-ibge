@@ -2,10 +2,12 @@
 import requests
 
 
+
 class DataExtractor:
-    def __init__(self):
-        # self.indicadores = indicadores
-        self.url = f"https://servicodados.ibge.gov.br/api/v1/paises/AR|BR/indicadores/77836|77819"
+    def __init__(self, indicadores, paises):
+        self.indicadores = indicadores
+        self.paises = paises
+        self.url = f"https://servicodados.ibge.gov.br/api/v1/paises/{self.paises}/indicadores/{self.indicadores}"
     
     def get_data(self):
         response = requests.get(self.url)
