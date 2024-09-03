@@ -1,8 +1,4 @@
-# %%
 import streamlit as st
-
-from src import DataBaseSQLite3, DataExtractor, DataLoader, DataTransform
-from utils.utils import ajustar_selecao
 
 paises = ['AF - Afeganistão',
           'ZA - África do Sul',
@@ -198,33 +194,10 @@ paises = ['AF - Afeganistão',
           'ZM - Zâmbia',
           'ZW - Zimbábue']
 
-options = st.multiselect("Selecione os paises de interesse.",
-                         paises,
-                         ['BR - Brasil'],)
-
-paises_ajustado = ajustar_selecao(options)
-paises = '|'.join(paises_ajustado)
+options = st.multiselect(
+    "Selecione os paises de interesse.",
+    paises,
+    ['BR - Brasil'],
+)
 
 st.write("You selected:", options)
-st.write("paises_ajustado:", paises_ajustado)
-st.write("paises:", paises)
-
-DataBaseSQLite3('db_ibge.db').create_database()
-
-indicadores = "77836|77819"
-
-extractor = DataExtractor(indicadores=indicadores, paises=paises)
-dados = extractor.get_data()
-
-# transform
-
-transform = DataTransform()
-json = transform.data_to_json(dados)
-
-
-df = transform.transform_to_dataframe()
-
-# load
-DataBaseSQLite3('db_ibge.db').send_dataframe_to_database(
-    dataframe=df, table_name='test')
-# %%

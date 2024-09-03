@@ -1,10 +1,12 @@
-import pandas as pd
 import json
+
+import pandas as pd
+
 
 class DataTransform:
     def __init__(self):
         self.data = None
-    
+
     def data_to_json(self, json_data):
         records = []
         for item in json_data:
@@ -19,7 +21,7 @@ class DataTransform:
                                 'País': pais,
                                 'Ano': ano,
                                 'Valor': valor,
-                                })
+                            })
             self.data = records
         return records
 
