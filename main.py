@@ -2,7 +2,6 @@
 import os
 
 import streamlit as st
-from dotenv import load_dotenv
 
 from src import DataBaseSQLite3, DataExtractor, DataLoader, DataTransform
 from utils.data_api import todos_indicadores, todos_paises
@@ -15,7 +14,6 @@ paises_selecionados = st.multiselect(label="Selecione os paises de interesse.",
                                      default=['BR - Brasil'])
 
 
-load_dotenv()
 username_postgres = os.environ['POSTGRES_USERNAME']
 password_postgres = os.environ['POSTGRES_PASSWORD']
 host_postgres = os.environ['POSTGRES_HOST']
