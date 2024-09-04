@@ -2,229 +2,56 @@
 import streamlit as st
 
 from src import DataBaseSQLite3, DataExtractor, DataLoader, DataTransform
+from utils.data_api import todos_indicadores, todos_paises
 from utils.utils import ajustar_selecao
 
-paises = ['AF - Afeganistão',
-          'ZA - África do Sul',
-          'AL - Albânia',
-          'DE - Alemanha',
-          'AD - Andorra',
-          'AO - Angola',
-          'AG - Antígua e Barbuda',
-          'SA - Arábia Saudita',
-          'DZ - Argélia',
-          'AR - Argentina',
-          'AM - Armênia',
-          'AU - Austrália',
-          'AT - Áustria',
-          'AZ - Azerbaijão',
-          'BS - Bahamas',
-          'BD - Bangladesh',
-          'BB - Barbados',
-          'BH - Barein',
-          'BY - Belarus',
-          'BE - Bélgica',
-          'BZ - Belize',
-          'BJ - Benin',
-          'BO - Bolívia',
-          'BA - Bósnia e Herzegovina',
-          'BW - Botsuana',
-          'BR - Brasil',
-          'BN - Brunei',
-          'BG - Bulgária',
-          'BF - Burkina Faso',
-          'BI - Burundi',
-          'BT - Butão',
-          'CV - Cabo Verde',
-          'CM - Camarões',
-          'KH - Camboja',
-          'CA - Canadá',
-          'QA - Catar',
-          'KZ - Cazaquistão',
-          'TD - Chade',
-          'CL - Chile',
-          'CN - China',
-          'CY - Chipre',
-          'CO - Colômbia',
-          'KM - Comores',
-          'CG - Congo',
-          'CI - Costa do Marfim',
-          'CR - Costa Rica',
-          'HR - Croácia',
-          'CU - Cuba',
-          'DK - Dinamarca',
-          'DJ - Djibouti',
-          'DM - Dominica',
-          'EG - Egito',
-          'SV - El Salvador',
-          'AE - Emirados Árabes Unidos',
-          'EC - Equador',
-          'ER - Eritréia',
-          'SK - Eslováquia',
-          'SI - Eslovênia',
-          'ES - Espanha',
-          'US - Estados Unidos da América',
-          'EE - Estônia',
-          'SZ - Eswatini',
-          'ET - Etiópia',
-          'FJ - Fiji',
-          'PH - Filipinas',
-          'FI - Finlândia',
-          'FR - França',
-          'GA - Gabão',
-          'GM - Gâmbia',
-          'GH - Gana',
-          'GE - Geórgia',
-          'GD - Granada',
-          'GR - Grécia',
-          'GT - Guatemala',
-          'GY - Guiana',
-          'GN - Guiné',
-          'GQ - Guiné Equatorial',
-          'GW - Guiné-Bissau',
-          'HT - Haiti',
-          'NL - Holanda',
-          'HN - Honduras',
-          'HU - Hungria',
-          'YE - Iêmen',
-          'MH - Ilhas Marshall',
-          'SB - Ilhas Salomão',
-          'IN - Índia',
-          'ID - Indonésia',
-          'IR - Irã',
-          'IQ - Iraque',
-          'IE - Irlanda',
-          'IS - Islândia',
-          'IL - Israel',
-          'IT - Itália',
-          'JM - Jamaica',
-          'JP - Japão',
-          'JO - Jordânia',
-          'KI - Kiribati',
-          'KW - Kuwait',
-          'LA - Laos',
-          'LS - Lesoto',
-          'LV - Letônia',
-          'LB - Líbano',
-          'LR - Libéria',
-          'LY - Líbia',
-          'LI - Liechtenstein',
-          'LT - Lituânia',
-          'LU - Luxemburgo',
-          'MK - Macedônia do Norte',
-          'MG - Madagáscar',
-          'MY - Malásia',
-          'MW - Malauí',
-          'MV - Maldivas',
-          'ML - Mali',
-          'MT - Malta',
-          'MA - Marrocos',
-          'MU - Maurício',
-          'MR - Mauritânia',
-          'MX - México',
-          'MM - Mianmar',
-          'FM - Micronésia',
-          'MZ - Moçambique',
-          'MD - Moldávia',
-          'MC - Mônaco',
-          'MN - Mongólia',
-          'ME - Montenegro',
-          'NA - Namíbia',
-          'NR - Nauru',
-          'NP - Nepal',
-          'NI - Nicarágua',
-          'NE - Níger',
-          'NG - Nigéria',
-          'NO - Noruega',
-          'NZ - Nova Zelândia',
-          'OM - Omã',
-          'PW - Palau',
-          'PA - Panamá',
-          'PG - Papua Nova Guiné',
-          'PK - Paquistão',
-          'PY - Paraguai',
-          'PE - Peru',
-          'PL - Polônia',
-          'PT - Portugal',
-          'KE - Quênia',
-          'KG - Quirguistão',
-          'GB - Reino Unido',
-          'CF - República Centro Africana',
-          'KR - República da Coréia',
-          'CD - República Democrática do Congo',
-          'DO - República Dominicana',
-          'KP - República Popular Democrática da Coréia',
-          'CZ - República Tcheca',
-          'RO - Romênia',
-          'RW - Ruanda',
-          'RU - Rússia (Federação Russa)',
-          'WS - Samoa',
-          'SM - San Marino',
-          'LC - Santa Lúcia',
-          'KN - São Cristóvão e Nevis',
-          'ST - São Tomé e Príncipe',
-          'VC - São Vicente e Granadinas',
-          'SC - Seichelles',
-          'SN - Senegal',
-          'SL - Serra Leoa',
-          'RS - Sérvia',
-          'SG - Singapura',
-          'SY - Síria',
-          'SO - Somália',
-          'LK - Sri Lanka',
-          'SD - Sudão',
-          'SS - Sudão do Sul',
-          'SE - Suécia',
-          'CH - Suíça',
-          'SR - Suriname',
-          'TJ - Tadjiquistão',
-          'TH - Tailândia',
-          'TZ - Tanzânia',
-          'TL - Timor Leste',
-          'TG - Togo',
-          'TO - Tonga',
-          'TT - Trinidad e Tobago',
-          'TN - Tunísia',
-          'TM - Turcomenistão',
-          'TR - Turquia',
-          'TV - Tuvalu',
-          'UA - Ucrânia',
-          'UG - Uganda',
-          'UY - Uruguai',
-          'UZ - Uzbequistão',
-          'VU - Vanuatu',
-          'VE - Venezuela',
-          'VN - Vietnã',
-          'ZM - Zâmbia',
-          'ZW - Zimbábue']
+st.set_page_config(layout="wide")
+paises_selecionados = st.multiselect(label="Selecione os paises de interesse.",
+                                     placeholder='Selecione os paises',
+                                     options=todos_paises,
+                                     default=['BR - Brasil'])
 
-options = st.multiselect("Selecione os paises de interesse.",
-                         paises,
-                         ['BR - Brasil'],)
+if len(paises_selecionados) >= 1:
+    paises_ajustado = ajustar_selecao(paises_selecionados)
+    paises_pipe = '|'.join(paises_ajustado)
+    st.write(paises_pipe)
 
-paises_ajustado = ajustar_selecao(options)
-paises = '|'.join(paises_ajustado)
-
-st.write("You selected:", options)
-st.write("paises_ajustado:", paises_ajustado)
-st.write("paises:", paises)
-
-DataBaseSQLite3('db_ibge.db').create_database()
-
-indicadores = "77836|77819"
-
-extractor = DataExtractor(indicadores=indicadores, paises=paises)
-dados = extractor.get_data()
-
-# transform
-
-transform = DataTransform()
-json = transform.data_to_json(dados)
+indicadores_selecionados = st.multiselect(label="Selecione os indicadores de interesse.",
+                                          placeholder='Selecione os indicadores',
+                                          options=todos_indicadores)
 
 
-df = transform.transform_to_dataframe()
+if len(indicadores_selecionados) >= 1:
+    indicadores_ajustado = ajustar_selecao(indicadores_selecionados)
+    indicadores_pipe = '|'.join(indicadores_ajustado)
 
-# load
-DataBaseSQLite3('db_ibge.db').send_dataframe_to_database(
-    dataframe=df, table_name='test')
-# %%
+
+def start():
+    extractor = DataExtractor(
+        indicadores=indicadores_pipe, paises=paises_pipe)
+    dados = extractor.get_data()
+    transform = DataTransform()
+    json = transform.data_to_json(dados)
+    df = transform.transform_to_dataframe()
+    df
+
+# DataBaseSQLite3('db_ibge.db').create_database()
+
+
+# indicadores = "77836|77819"
+if paises_selecionados and indicadores_selecionados:
+    if st.button("Processar dados 🚀"):
+        start()
+
+    # # transform
+
+    # # load
+    # DataBaseSQLite3('db_ibge.db').send_dataframe_to_database(
+    #     dataframe=df, table_name='test')
+
+
+else:
+    st.write("Selecione os dados para continuar.")
+
+
+# # %%
