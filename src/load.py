@@ -30,7 +30,7 @@ class DataBaseSQLite3:
     ):
 
         db = self.db_name
-        db_engine = create_engine(f'sqlite:///{db}')
+        db_engine = create_engine(f'{db}')
 
         # Store DataFrame in SQLite
         dataframe.to_sql(
@@ -40,9 +40,9 @@ class DataBaseSQLite3:
             index=False
         )
 
-        connection = sqlite3.connect(self.db_name)
+        # connection = sqlite3.connect(self.db_name)
 
-        print(connection.total_changes)
+        # print(connection.total_changes)
 
     def check_tables_in_database(self):
 
@@ -84,7 +84,6 @@ class DataBaseSQLite3:
         cursor = connection.cursor()
         table = cursor.execute(query).fetchmany(n_rows)
         cursor.close()
-        display(table)
 
     def delete_database(self):
 

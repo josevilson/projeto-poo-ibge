@@ -1,5 +1,8 @@
 # %%
+import os
+
 import streamlit as st
+from dotenv import load_dotenv
 
 from src import DataBaseSQLite3, DataExtractor, DataLoader, DataTransform
 from utils.data_api import todos_indicadores, todos_paises
@@ -10,6 +13,19 @@ paises_selecionados = st.multiselect(label="Selecione os paises de interesse.",
                                      placeholder='Selecione os paises',
                                      options=todos_paises,
                                      default=['BR - Brasil'])
+
+
+load_dotenv()
+username_postgres = os.environ['POSTGRES_USERNAME']
+password_postgres = os.environ['POSTGRES_PASSWORD']
+host_postgres = os.environ['POSTGRES_HOST']
+port_postgres = os.environ['POSTGRES_PORT']
+dbname_postgres = os.environ['POSTGRES_DB']
+
+string_connection_postgres = f'postgresql+psycopg2://{username_postgres}:{
+    password_postgres}@{host_postgres}:{port_postgres}/{dbname_postgres}'
+st.write(string_connection_postgres)
+
 
 if len(paises_selecionados) >= 1:
     paises_ajustado = ajustar_selecao(paises_selecionados)
@@ -34,21 +50,22 @@ def start():
     json = transform.data_to_json(dados)
     df = transform.transform_to_dataframe()
     df
-
-# DataBaseSQLite3('db_ibge.db').create_database()
+    return df
 
 
 # indicadores = "77836|77819"
 if paises_selecionados and indicadores_selecionados:
     if st.button("Processar dados 🚀"):
-        start()
+        df = start()
+
+        DataBaseSQLite3(string_connection_postgres).send_dataframe_to_database(
+            dataframe=df, table_name='test')
 
     # # transform
 
     # # load
     # DataBaseSQLite3('db_ibge.db').send_dataframe_to_database(
     #     dataframe=df, table_name='test')
-
 
 else:
     st.write("Selecione os dados para continuar.")
