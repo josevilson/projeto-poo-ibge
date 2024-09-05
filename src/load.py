@@ -29,8 +29,3 @@ class DataBaseSQLite3:
         # connection = sqlite3.connect(self.db_name)
 
         # print(connection.total_changes)
-
-
-class DataLoader:
-    def __init__(self, data):
-        pass
