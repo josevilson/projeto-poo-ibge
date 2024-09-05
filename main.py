@@ -3,7 +3,7 @@ import os
 
 import streamlit as st
 
-from src import DataBaseSQLite3, DataExtractor, DataLoader, DataTransform
+from src import DataBaseSQLite3, DataExtractor, DataTransform
 from utils.data_api import todos_indicadores, todos_paises
 from utils.utils import ajustar_selecao
 
