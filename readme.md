@@ -1,13 +1,15 @@
 
 # Projeto ETL com Visualização usando Streamlit
 
-[Fontes: Indicadores dos paises - ONU/IBGE] (https://servicodados.ibge.gov.br/api/docs/paises)
+[Fontes: Indicadores dos paises - ONU/IBGE](https://servicodados.ibge.gov.br/api/docs/paises)
 
 ## Descrição
 
 Este projeto implementa um pipeline ETL (Extração, Transformação e Carga) com visualização de dados em tempo real utilizando o Streamlit. O objetivo é fornecer uma solução completa para a extração de dados de APIs e bancos de dados, transformá-los utilizando Python e Pandas, carregá-los em um Data Warehouse e, finalmente, disponibilizá-los em uma aplicação web interativa usando o Streamlit.
 
 ## Arquitetura
+
+![Arquitetura do projeto](img/arquitetura.png)
 
 A arquitetura do projeto segue o processo tradicional de ETL e é dividida em três partes principais:
 
@@ -48,8 +50,9 @@ A arquitetura do projeto segue o processo tradicional de ETL e é dividida em tr
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seuusuario/etl-streamlit-project.git
-cd etl-streamlit-project
+git clone https://github.com/josevilson/projeto-poo-ibge.git
+
+cd projeto-poo-ibge
 ```
 
 2. Crie um ambiente virtual e ative-o:
@@ -67,21 +70,15 @@ pip install -r requirements.txt
 
 4. Configure as variáveis de ambiente no arquivo `.env` para suas credenciais do PostgreSQL e da API.
 
-5. Execute o pipeline de ETL:
 
-```bash
-python etl_pipeline.py
-```
-
-6. Para iniciar a aplicação Streamlit, execute o comando:
+5. Para iniciar a aplicação Streamlit, execute o comando:
 
 ```bash
 streamlit run app.py
 ```
 
 ## Como Funciona
-
-- O script de ETL (`etl_pipeline.py`) executa a extração dos dados das fontes configuradas, transforma os dados conforme necessário e os carrega no Data Warehouse.
+- A aplicação do streamlit realiza o requets na API e envia os dados para o SQL.
 - A aplicação Streamlit (`app.py`) lê os dados do Data Warehouse e os exibe de maneira interativa.
 
 ## Contribuição
