@@ -9,6 +9,7 @@ __pycache__/
 *$py.class
 .venv
 *.pyc
+.streamlit/
 
 # C extensions
 *.so
