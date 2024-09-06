@@ -24,13 +24,11 @@ dbname_postgres = st.secrets['POSTGRES_DB']
 
 string_connection_postgres = f'postgresql+psycopg2://{username_postgres}:{
     password_postgres}@{host_postgres}:{port_postgres}/{dbname_postgres}'
-st.write(string_connection_postgres)
 
 
 if len(paises_selecionados) >= 1:
     paises_ajustado = ajustar_selecao(paises_selecionados)
     paises_pipe = '|'.join(paises_ajustado)
-    st.write(paises_pipe)
 
 indicadores_selecionados = st.multiselect(label="Selecione os indicadores de interesse.",
                                           placeholder='Selecione os indicadores',
