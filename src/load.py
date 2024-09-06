@@ -23,9 +23,7 @@ class DataBaseSQLite3:
             name=table_name,
             con=db_engine,
             if_exists='replace',
-            index=False
-        )
+            index=False)
+        
 
-        # connection = sqlite3.connect(self.db_name)
 
-        # print(connection.total_changes)
