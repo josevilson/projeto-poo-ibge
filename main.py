@@ -47,7 +47,7 @@ def start():
         indicadores=indicadores_pipe, paises=paises_pipe)
     dados = extractor.get_data()
     transform = DataTransform()
-    json = transform.data_to_json(dados)
+    transform.data_to_json(dados)
     df = transform.transform_to_dataframe()
     df
     return df
