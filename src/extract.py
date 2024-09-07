@@ -15,5 +15,4 @@ class DataExtractor:
             data = response.json()
             return data
         else:
-            raise Exception(f"Falha ao carregar os dados  {
-                            response.status_code}")
+            raise Exception(f"Falha ao carregar os dados  {response.status_code}")
