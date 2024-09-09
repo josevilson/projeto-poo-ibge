@@ -1,7 +1,7 @@
 
 # Projeto ETL com Visualização usando Streamlit
 
-[Link do projeto (Deploy) 🚀](https://projeto-poo-ibge-mrfvjqdbvkec5dbz8u3ihx.streamlit.app/)
+[Link do projeto (Deploy) 🚀](https://onu-paises.streamlit.app/)
 
 
 [Fontes: Indicadores dos paises - ONU/IBGE](https://servicodados.ibge.gov.br/api/docs/paises)
