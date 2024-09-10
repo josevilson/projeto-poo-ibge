@@ -1,16 +1,16 @@
 import streamlit as st
 
 readme_page = st.Page("pages/readme.py",
-                      title="📚 Readme", icon=":material/bookmark:")
+                      title="Readme", icon=":material/bookmark:")
 
 elt_data_page = st.Page("pages/etl_data.py",
-                        title="⬆️ Get data from API", icon=":material/add_circle:")
+                        title="Get data from API", icon=":material/add_circle:")
 
 view_graphic = st.Page("pages/view_graphic.py",
-                       title="📉 Charts")
+                       title="Charts")
 
 view_dataframe = st.Page("pages/view_dataframe.py",
-                         title="🎲 DataFrame", )
+                         title="DataFrame", )
 
 pg = st.navigation(
     {

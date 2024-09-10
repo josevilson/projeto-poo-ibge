@@ -27,6 +27,7 @@ A arquitetura do projeto segue o processo tradicional de ETL e é dividida em tr
    - Os dados extraídos são processados e transformados usando scripts em Python, com apoio da biblioteca Pandas, para realizar a limpeza, agregação, e outras transformações necessárias.
    
 3. **Carga (Load)**:
+   - Cloud: Render(PostgreSQL).
    - Destino: Data Warehouse (ex: PostgreSQL).
    - Os dados transformados são então carregados para um armazém de dados, garantindo a persistência e integridade da informação.
 
